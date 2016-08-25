@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
 import sys,os
-import FichNombramientos
+from utilidades.ficheros.FichNombramientos import FichNombramientos
 from utilidades.basedatos.Configurador import Configurador
+
 configurador=Configurador(".." + os.sep + ".." + os.sep + ".." )
 configurador.activar_configuracion("listas.settings")
 from nombramientos.models import Nombramiento, Centro, Localidad, Provincia
 from django.db import transaction
-nombramientos=FichNombramientos.FichNombramientos.get_nombramientos_clase_abstracta(sys.argv[1])
+nombramientos=FichNombramientos.get_nombramientos_clase_abstracta(sys.argv[1])
+
+fecha_proc=sys.argv[2]
 
 ab=Provincia(nombre_provincia="Albacete")
 ab.save()
@@ -20,7 +23,7 @@ cu.save()
 gu=Provincia(nombre_provincia="Guadalajara")
 gu.save()
 
-#Primer recorrido, almacenamos las localidades
+#Primer almacenamos las localidades, luego los centros y luego los nombramientos
 with transaction.atomic():
     for n in nombramientos:
         codigo_provincia=n.cod_localidad[0:2]
@@ -38,3 +41,16 @@ with transaction.atomic():
                     nombre_localidad=n.nom_localidad,
                     provincia=provincia_asociada)
         l.save()
+        c=Centro ( codigo_centro = n.cod_centro, nombre_centro=n.nom_centro)
+        c.localidad_id=n.cod_localidad
+        c.save()
+        
+        nombramiento=Nombramiento(nif=n.nif_persona, nombre_completo=n.nombre_persona,
+                       numero_orden=n.num_orden)
+        nombramiento.fecha_inicio="2016-09-01"
+        nombramiento.fecha_fin="2017-06-30"
+        nombramiento.fecha_procedimiento=fecha_proc
+        nombramiento.centro_id=n.cod_centro
+        nombramiento.especialidad_id=n.cod_especialidad
+        nombramiento.save()
+        

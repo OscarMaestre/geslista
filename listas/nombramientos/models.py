@@ -1,3 +1,5 @@
+#/usr/bin/pyhon
+#coding=utf-8
 from __future__ import unicode_literals
 
 from django.db import models
@@ -9,17 +11,22 @@ from django.db import models
 
 
 class Especialidad(models.Model):
+    IDIOMA_ESPANOL="Español"
+    IDIOMA_INGLES="Ingles"
+    IDIOMA_FRANCES="Frances"
+    JORNADA_COMPLETA="Completa"
+    MEDIA_JORNADA="Media jornada"
     codigo_especialidad = models.TextField(primary_key=True)  # This field type is a guess.
     descripcion = models.TextField(blank=True, null=True)  # This field type is a guess.
     idioma = models.TextField(blank=True, null=True)  # This field type is a guess.
-    tiempo_parcial = models.TextField(blank=True, null=True)  # This field type is a guess.
-
+    tipo_de_jornada= models.TextField(blank=True, null=True)  # This field type is a guess.
+    equivalencia_con = models.TextField(max_length=20)
     class Meta:
         db_table = 'especialidades'
 
 class Correspondencias(models.Model):
-    codigo_gaseosa = models.IntegerField(primary_key=True)
-    codigo_real = models.TextField(primary_key=True)  # This field type is a guess.
+    codigo_gaseosa = models.IntegerField()
+    codigo_real = models.TextField(max_length=20)  # This field type is a guess.
 
     class Meta:
         db_table = 'correspondencias'
@@ -83,7 +90,7 @@ class Localidad(models.Model):
 class Centro(models.Model):
     codigo_centro = models.CharField(primary_key=True, max_length=10)
     nombre_centro = models.CharField(max_length=120, blank=True, null=True)
-    codigo_localidad = models.ForeignKey(Localidad)
+    localidad = models.ForeignKey(Localidad)
     direccion_postal = models.CharField(max_length=120, blank=True, null=True)
     codigo_postal = models.CharField(max_length=6, blank=True, null=True)
     tlf = models.CharField(max_length=20, blank=True, null=True)
@@ -94,7 +101,7 @@ class Centro(models.Model):
     tipo_centro = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        db_table = 'centros_region'
+        db_table = 'centros'
 
 
 
@@ -103,13 +110,14 @@ class Centro(models.Model):
 class Nombramiento(models.Model):
     nif = models.TextField(primary_key=True,max_length=20)  
     nombre_completo = models.TextField(max_length=110)
-    codigo_centro = models.ForeignKey(Centro)
+    centro = models.ForeignKey(Centro)
     procedimiento = models.TextField(max_length=60)  
     fecha_procedimiento = models.DateField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     especialidad = models.ForeignKey(Especialidad)
-    auxiliar = models.TextField(max_length=4096)  
+    auxiliar = models.TextField(max_length=4096)
+    numero_orden=models.IntegerField()
 
     class Meta:
         db_table = 'nombramientos'
