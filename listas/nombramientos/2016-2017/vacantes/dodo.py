@@ -28,7 +28,7 @@ PROCESADOR_EEMM="convertir_eemm.py"
 #PROCESADOR_MAESTROS="convertir_maestros.py"
 PROCESADOR_MAESTROS=PROCESADOR_EEMM
 ALMACENADOR = "almacenar_datos.py"
-FICH_RESULTADO="vacantes_2016_08_22.nom"
+FICH_RESULTADO="vacantes_2016_08_29.nom"
 
 gf.borrar_fichero ( FICH_RESULTADO )
 
