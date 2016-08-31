@@ -15,7 +15,7 @@ def obtener_tuplas(nombre_procedimiento):
     #print(nombramientos)
     tuplas=[]
     for n in nombramientos:
-        tupla=(n.nif, n.centro.codigo_centro, "Interino del 1-sep-2016 al 30-jun-2017")
+        tupla=(n.centro.codigo_centro, n.nif, "Interino del 1-sep-2016 al 30-jun-2017")
         tuplas.append ( tupla )
     return tuplas
 
@@ -23,6 +23,6 @@ def obtener_tuplas(nombre_procedimiento):
 tuplas_practicos=obtener_tuplas("")
 
 vba=GeneradorVBA.generar_modulo_vba(tuplas_practicos, "gaseosa",
-                                "CodCentroCursoActual", "nif",
+                                "CodCentroCursoActual", "dni",
                                 "interinos.vba", "auxiliar")
 print (vba)

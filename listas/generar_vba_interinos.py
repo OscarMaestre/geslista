@@ -12,10 +12,10 @@ from nombramientos.models import Nombramiento
 
 def obtener_tuplas(nombre_procedimiento):
     nombramientos=Nombramiento.objects.filter(procedimiento=nombre_procedimiento)
-    print(nombramientos)
+    #print(nombramientos)
     tuplas=[]
     for n in nombramientos:
-        tupla=(n.nif, n.centro_id, "En practicas durante 2016-2017")
+        tupla=(n.centro_id, n.nif,  "En practicas durante 2016-2017")
         tuplas.append ( tupla )
     return tuplas
 
@@ -23,6 +23,6 @@ def obtener_tuplas(nombre_procedimiento):
 tuplas_practicos=obtener_tuplas("Adj practicos 2016-2017")
 
 vba=GeneradorVBA.generar_modulo_vba(tuplas_practicos, "gaseosa",
-                                "CodCentroCursoActual", "nif",
+                                "CodCentroCursoActual", "dni",
                                 "interinos.vba", "auxiliar")
 print (vba)
