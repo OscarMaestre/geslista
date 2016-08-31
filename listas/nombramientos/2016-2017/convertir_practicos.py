@@ -10,7 +10,7 @@ procesador_pdf=ProcesadorPDF()
 gf=GestorFicheros()
 configurador=Configurador(".." + os.sep + "..")
 configurador.activar_configuracion("listas.settings")
-from nombramientos.models import Nombramiento, Centro, Localidad, Provincia
+from nombramientos.models import Nombramiento, Centro, Localidad, Provincia, Especialidad
 
 
 
@@ -92,9 +92,13 @@ while not procesador_pdf.eof():
                 localidad=loc_asociada
             )
         print (centro_asociado)
+        espe_asociada=Especialidad.objects.get(pk=codigo_espe)
         nomb=Nombramiento(
-            codigo_centro=centro_asociado, nif=dni, especialidad=codigo_espe,
-            nombre_completo=nombre)
+            centro=centro_asociado, nif=dni, especialidad=espe_asociada,
+            nombre_completo=nombre, procedimiento="Adj practicos 2016-2017",
+            fecha_procedimiento="2016-08-22", fecha_inicio="2016-09-01",
+            fecha_fin="2017-06-30", numero_orden=0)
+        nomb.save()
         #procesador_pdf.siguiente_fila()
         
     linea=procesador_pdf.siguiente_fila()

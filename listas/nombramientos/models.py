@@ -117,7 +117,7 @@ class Nombramiento(models.Model):
     fecha_fin = models.DateField()
     especialidad = models.ForeignKey(Especialidad)
     auxiliar = models.TextField(max_length=4096)
-    numero_orden=models.IntegerField()
+    numero_orden=models.IntegerField(blank=True)
 
     class Meta:
         db_table = 'nombramientos'
