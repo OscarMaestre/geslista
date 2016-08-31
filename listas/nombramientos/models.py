@@ -83,7 +83,7 @@ class Localidad(models.Model):
     provincia = models.ForeignKey ( Provincia )
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
-
+    
     class Meta:
         db_table = 'localidades'
 
