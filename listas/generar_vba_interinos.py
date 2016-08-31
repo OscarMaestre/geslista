@@ -15,7 +15,7 @@ def obtener_tuplas(nombre_procedimiento):
     print(nombramientos)
     tuplas=[]
     for n in nombramientos:
-        tupla=(n.nif, n.centro.codigo_centro, "En practicas durante 2016-2017")
+        tupla=(n.nif, n.centro_id, "En practicas durante 2016-2017")
         tuplas.append ( tupla )
     return tuplas
 
